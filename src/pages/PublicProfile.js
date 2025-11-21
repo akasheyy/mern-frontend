@@ -15,7 +15,7 @@ export default function PublicProfile() {
         const token = localStorage.getItem("token");
 
         // Load logged in user
-        const meRes = await fetch("http://localhost:5000/api/user/me", {
+        const meRes = await fetch("https://mern-backend-igep.onrender.com/api/user/me", {
           headers: { Authorization: "Bearer " + token }
         });
         const meData = await meRes.json();
@@ -23,7 +23,7 @@ export default function PublicProfile() {
 
         // Load viewed user profile
         const res = await fetch(
-          `http://localhost:5000/api/user/profile/${id}`,
+          `https://mern-backend-igep.onrender.com/api/user/profile/${id}`,
           { headers: { Authorization: "Bearer " + token } }
         );
         const data = await res.json();
@@ -56,7 +56,7 @@ export default function PublicProfile() {
   async function handleFollow() {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:5000/api/user/${user._id}/follow`, {
+    await fetch(`https://mern-backend-igep.onrender.com/api/user/${user._id}/follow`, {
       method: "PUT",
       headers: { Authorization: "Bearer " + token }
     });
@@ -73,7 +73,7 @@ export default function PublicProfile() {
   async function handleUnfollow() {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:5000/api/user/${user._id}/unfollow`, {
+    await fetch(`https://mern-backend-igep.onrender.com/api/user/${user._id}/unfollow`, {
       method: "PUT",
       headers: { Authorization: "Bearer " + token }
     });

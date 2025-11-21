@@ -8,7 +8,7 @@ export default function Navbar() {
     async function loadUser() {
       if (!token) return;
 
-      const res = await fetch("http://localhost:5000/api/user/profile", {
+      const res = await fetch("https://mern-backend-igep.onrender.com/api/user/profile", {
         headers: { Authorization: "Bearer " + token }
       });
       const data = await res.json();

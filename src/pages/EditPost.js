@@ -17,7 +17,7 @@ export default function EditPost() {
   useEffect(() => {
     async function loadPost() {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/posts/${id}`, {
+      const res = await fetch(`https://mern-backend-igep.onrender.com/api/posts/${id}`, {
         headers: { Authorization: "Bearer " + token }
       });
 
@@ -63,7 +63,7 @@ export default function EditPost() {
       formData.append("image", newImage);
     }
 
-    const res = await fetch(`http://localhost:5000/api/posts/${id}`, {
+    const res = await fetch(`https://mern-backend-igep.onrender.com/api/posts/${id}`, {
       method: "PUT",
       headers: { Authorization: "Bearer " + token },
       body: formData

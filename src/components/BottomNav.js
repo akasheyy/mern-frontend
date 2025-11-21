@@ -17,7 +17,7 @@ export default function BottomNav() {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5000/api/user/me", {
+        const res = await fetch("https://mern-backend-igep.onrender.com/api/user/me", {
           headers: { Authorization: "Bearer " + token }
         });
         const data = await res.json();

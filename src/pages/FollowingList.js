@@ -11,7 +11,7 @@ export default function FollowingList() {
       const token = localStorage.getItem("token");
 
       const res = await fetch(
-        `http://localhost:5000/api/user/profile/${id}`,
+        `https://mern-backend-igep.onrender.com/api/user/profile/${id}`,
         { headers: { Authorization: "Bearer " + token } }
       );
 
@@ -38,7 +38,7 @@ export default function FollowingList() {
           return (
             <Link
               key={userId}
-              to={`/profile/${userId}`}
+              to={`/user/${userId}`}
               style={{
                 display: "flex",
                 alignItems: "center",

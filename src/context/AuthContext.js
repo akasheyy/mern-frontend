@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    fetch("http://localhost:5000/api/auth/me", {
+    fetch("https://mern-backend-igep.onrender.com/api/auth/me", {
       headers: {
         Authorization: "Bearer " + token,
       },

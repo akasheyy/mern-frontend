@@ -15,7 +15,7 @@ export default function Explore() {
   // ----------------------------------------------------
   useEffect(() => {
     async function loadCurrentUser() {
-      const res = await fetch("http://localhost:5000/api/user/me", {
+      const res = await fetch("https://mern-backend-igep.onrender.com/api/user/me", {
         headers: { Authorization: "Bearer " + token }
       });
 
@@ -34,7 +34,7 @@ export default function Explore() {
     if (!currentUser) return;
 
     async function loadSuggestions() {
-      const res = await fetch("http://localhost:5000/api/user/suggestions", {
+      const res = await fetch("https://mern-backend-igep.onrender.com/api/user/suggestions", {
         headers: { Authorization: "Bearer " + token }
       });
 
@@ -58,7 +58,7 @@ export default function Explore() {
       setLoading(true);
 
       const res = await fetch(
-        `http://localhost:5000/api/user/search?query=${query}`,
+        `https://mern-backend-igep.onrender.com/api/user/search?query=${query}`,
         { headers: { Authorization: "Bearer " + token } }
       );
 
@@ -86,7 +86,7 @@ export default function Explore() {
   // FOLLOW USER IN EXPLORE
   // ----------------------------------------------------
   async function handleFollow(targetId) {
-    await fetch(`http://localhost:5000/api/user/${targetId}/follow`, {
+    await fetch(`https://mern-backend-igep.onrender.com/api/user/${targetId}/follow`, {
       method: "PUT",
       headers: { Authorization: "Bearer " + token }
     });

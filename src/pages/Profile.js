@@ -10,14 +10,14 @@ export default function Profile() {
       const token = localStorage.getItem("token");
 
       // Load user info
-      const res1 = await fetch("http://localhost:5000/api/user/me", {
+      const res1 = await fetch("https://mern-backend-igep.onrender.com/api/user/me", {
         headers: { Authorization: "Bearer " + token }
       });
       const userInfo = await res1.json();
       setUser(userInfo);
 
       // Load user's posts
-      const res2 = await fetch("http://localhost:5000/api/posts/myposts", {
+      const res2 = await fetch("https://mern-backend-igep.onrender.com/api/posts/myposts", {
         headers: { Authorization: "Bearer " + token }
       });
       const postsData = await res2.json();
@@ -38,7 +38,7 @@ export default function Profile() {
   const deletePost = async (id) => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:5000/api/posts/${id}`, {
+    const res = await fetch(`https://mern-backend-igep.onrender.com/api/posts/${id}`, {
       method: "DELETE",
       headers: { Authorization: "Bearer " + token }
     });
@@ -58,7 +58,7 @@ export default function Profile() {
     const formData = new FormData();
     formData.append("avatar", file);
 
-    fetch("http://localhost:5000/api/user/avatar", {
+    fetch("https://mern-backend-igep.onrender.com/api/user/avatar", {
       method: "PUT",
       headers: { Authorization: "Bearer " + token },
       body: formData

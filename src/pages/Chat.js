@@ -26,7 +26,7 @@ export default function Chat() {
      SOCKET CONNECT
   =================================================== */
   useEffect(() => {
-    socket.current = io("http://localhost:5000", {
+    socket.current = io("https://mern-backend-igep.onrender.com", {
       auth: { token }
     });
 
@@ -53,7 +53,7 @@ export default function Chat() {
       const token = localStorage.getItem("token");
 
       // logged-in user
-      const meRes = await fetch("http://localhost:5000/api/user/me", {
+      const meRes = await fetch("https://mern-backend-igep.onrender.com/api/user/me", {
         headers: { Authorization: "Bearer " + token }
       });
       const meData = await meRes.json();
@@ -61,7 +61,7 @@ export default function Chat() {
 
       // chat history
       const msgRes = await fetch(
-        `http://localhost:5000/api/messages/history/${id}`,
+        `https://mern-backend-igep.onrender.com/api/messages/history/${id}`,
         { headers: { Authorization: "Bearer " + token } }
       );
       const msgData = await msgRes.json();
@@ -69,7 +69,7 @@ export default function Chat() {
 
       // other user
       const userRes = await fetch(
-        `http://localhost:5000/api/user/profile/${id}`,
+        `https://mern-backend-igep.onrender.com/api/user/profile/${id}`,
         { headers: { Authorization: "Bearer " + token } }
       );
       const userData = await userRes.json();
@@ -114,7 +114,7 @@ const sendFile = async (e) => {
     const token = localStorage.getItem("token");
 
     const res = await fetch(
-      `http://localhost:5000/api/messages/file/${id}`,
+      `https://mern-backend-igep.onrender.com/api/messages/file/${id}`,
       {
         method: "POST",
         headers: { Authorization: "Bearer " + token },
@@ -170,7 +170,7 @@ const sendFile = async (e) => {
           const token = localStorage.getItem("token");
 
           const res = await fetch(
-            `http://localhost:5000/api/messages/voice/${id}`,
+            `https://mern-backend-igep.onrender.com/api/messages/voice/${id}`,
             {
               method: "POST",
               headers: { Authorization: "Bearer " + token },

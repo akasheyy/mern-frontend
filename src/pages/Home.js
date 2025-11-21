@@ -8,7 +8,7 @@ export default function Home() {
     const token = localStorage.getItem("token");
 
 
-    const res = await fetch("http://localhost:5000/api/posts", {
+    const res = await fetch("https://mern-backend-igep.onrender.com/api/posts", {
       headers: { Authorization: "Bearer " + token }
     });
 
@@ -23,7 +23,7 @@ export default function Home() {
   async function handleLike(postId) {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:5000/api/posts/${postId}/like`, {
+    await fetch(`https://mern-backend-igep.onrender.com/api/posts/${postId}/like`, {
       method: "PUT",
       headers: { Authorization: "Bearer " + token }
     });

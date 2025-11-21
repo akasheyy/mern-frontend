@@ -9,7 +9,7 @@ export default function SinglePost() {
   const loadPost = useCallback(async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:5000/api/posts/${id}`, {
+    const res = await fetch(`https://mern-backend-igep.onrender.com/api/posts/${id}`, {
       headers: { Authorization: "Bearer " + token }
     });
 
@@ -24,7 +24,7 @@ export default function SinglePost() {
   async function addComment() {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:5000/api/posts/${id}/comment`, {
+    await fetch(`https://mern-backend-igep.onrender.com/api/posts/${id}/comment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

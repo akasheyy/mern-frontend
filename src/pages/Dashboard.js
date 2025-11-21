@@ -10,7 +10,7 @@ export default function Dashboard() {
       try {
         const token = localStorage.getItem("token");
 
-        const res = await fetch("http://localhost:5000/api/messages/recent", {
+        const res = await fetch("https://mern-backend-igep.onrender.com/api/messages/recent", {
           headers: { Authorization: "Bearer " + token },
         });
 
