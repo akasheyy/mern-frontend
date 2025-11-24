@@ -46,9 +46,12 @@ export default function SinglePost() {
         padding: "30px 15px",
         background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginTop:"50px",
+        marginBottom:"50px"
       }}
     >
+      
       <div
         style={{
           width: "100%",
@@ -60,6 +63,31 @@ export default function SinglePost() {
           border: "1px solid #e5e7eb"
         }}
       >
+        {/* BACK BUTTON */}
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "15px"
+  }}
+>
+  <Link
+    to="/"
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "20px",
+      color: "#6d28d9",
+      textDecoration: "none",
+   
+      cursor: "pointer"
+    }}
+  >
+    ←
+  </Link>
+</div>
+
         {/* IMAGE */}
         {post.image && (
           <img
@@ -142,7 +170,7 @@ export default function SinglePost() {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             style={{
-              width: "100%",
+              width: "90%",
               padding: "12px",
               borderRadius: "12px",
               border: "1px solid #d1d5db",
@@ -194,19 +222,7 @@ export default function SinglePost() {
           </button>
         </div>
 
-        {/* BACK BUTTON */}
-        <Link
-          to="/"
-          style={{
-            display: "inline-block",
-            marginTop: "25px",
-            color: "#6d28d9",
-            fontWeight: "600",
-            textDecoration: "none"
-          }}
-        >
-          ← Back to Home
-        </Link>
+        
       </div>
     </div>
   );

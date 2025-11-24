@@ -27,11 +27,14 @@ export default function AddPost() {
     formData.append("content", post.content);
     if (image) formData.append("image", image);
 
-    const response = await fetch("https://mern-backend-igep.onrender.com/api/posts", {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + token },
-      body: formData
-    });
+    const response = await fetch(
+      "https://mern-backend-igep.onrender.com/api/posts",
+      {
+        method: "POST",
+        headers: { Authorization: "Bearer " + token },
+        body: formData
+      }
+    );
 
     const data = await response.json();
     alert(data.message);
@@ -61,7 +64,9 @@ export default function AddPost() {
         justifyContent: "center",
         alignItems: "center",
         background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        padding: "25px"
+        padding: "25px",
+        marginTop: "50px",
+        marginBottom: "50px"
       }}
     >
       <div
@@ -98,16 +103,6 @@ export default function AddPost() {
             value={post.title}
             onChange={handleChange}
             style={inputStyle}
-            onFocus={(e) => {
-              e.target.style.background = "#ffffff";
-              e.target.style.border = "1px solid #a78bfa";
-              e.target.style.boxShadow = "0 0 5px #a78bfa";
-            }}
-            onBlur={(e) => {
-              e.target.style.background = "#fafafa";
-              e.target.style.border = "1px solid #dbdbdb";
-              e.target.style.boxShadow = "none";
-            }}
           />
 
           {/* Description */}
@@ -118,16 +113,6 @@ export default function AddPost() {
             value={post.description}
             onChange={handleChange}
             style={inputStyle}
-            onFocus={(e) => {
-              e.target.style.background = "#ffffff";
-              e.target.style.border = "1px solid #a78bfa";
-              e.target.style.boxShadow = "0 0 5px #a78bfa";
-            }}
-            onBlur={(e) => {
-              e.target.style.background = "#fafafa";
-              e.target.style.border = "1px solid #dbdbdb";
-              e.target.style.boxShadow = "none";
-            }}
           />
 
           {/* Content */}
@@ -141,16 +126,6 @@ export default function AddPost() {
               ...inputStyle,
               resize: "none",
               height: "130px"
-            }}
-            onFocus={(e) => {
-              e.target.style.background = "#ffffff";
-              e.target.style.border = "1px solid #a78bfa";
-              e.target.style.boxShadow = "0 0 5px #a78bfa";
-            }}
-            onBlur={(e) => {
-              e.target.style.background = "#fafafa";
-              e.target.style.border = "1px solid #dbdbdb";
-              e.target.style.boxShadow = "none";
             }}
           ></textarea>
 
@@ -169,14 +144,6 @@ export default function AddPost() {
               marginBottom: "20px",
               transition: ".3s"
             }}
-            onMouseEnter={(e) => {
-              e.target.style.border = "2px dashed #a78bfa";
-              e.target.style.background = "#faf5ff";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.border = "2px dashed #dbdbdb";
-              e.target.style.background = "transparent";
-            }}
           >
             📸 Click to upload image
             <input
@@ -186,6 +153,23 @@ export default function AddPost() {
               style={{ display: "none" }}
             />
           </label>
+
+          {/* 🌟 Image Preview */}
+          {image && (
+            <div style={{ marginBottom: "20px", textAlign: "center" }}>
+              <img
+                src={URL.createObjectURL(image)}
+                alt="preview"
+                style={{
+                  width: "100%",
+                  maxHeight: "250px",
+                  objectFit: "cover",
+                  borderRadius: "14px",
+                  border: "1px solid #ddd"
+                }}
+              />
+            </div>
+          )}
 
           {/* Submit Button */}
           <button
@@ -202,16 +186,6 @@ export default function AddPost() {
               cursor: "pointer",
               boxShadow: "0 4px 15px rgba(102, 126, 234, 0.4)",
               transition: "0.3s"
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = "translateY(-2px)";
-              e.target.style.boxShadow =
-                "0 8px 20px rgba(102, 126, 234, 0.5)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = "translateY(0)";
-              e.target.style.boxShadow =
-                "0 4px 15px rgba(102, 126, 234, 0.4)";
             }}
           >
             Publish Post

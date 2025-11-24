@@ -77,10 +77,10 @@ export default function Profile() {
         padding: "20px",
         background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
     >
-      <div style={{ width: "100%", maxWidth: "900px" }}>
+      <div style={{ width: "100%", maxWidth: "900px",marginTop:"50px",marginBottom:"50px"  }}>
 
         {/* ---------------- PROFILE HEADER ---------------- */}
         <div
@@ -92,7 +92,7 @@ export default function Profile() {
             alignItems: "center",
             gap: "25px",
             boxShadow: "0 6px 18px rgba(0,0,0,0.12)",
-            marginBottom: "30px"
+            marginBottom: "30px",
           }}
         >
           {/* Avatar */}
@@ -211,7 +211,7 @@ export default function Profile() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
-            gap: "12px"
+            gap: "7px"
           }}
         >
           {posts.map((post) => (

@@ -101,17 +101,17 @@ export default function PublicProfile() {
         justifyContent: "center"
       }}
     >
-      <div style={{ width: "100%", maxWidth: "900px" }}>
+      <div style={{ width: "100%", maxWidth: "900px",marginTop:"50px",marginBottom:"50px" }}>
 
         {/* ---------- HEADER ---------- */}
         <div
           style={{
             background: "#fff",
-            padding: "25px",
+            padding: "30px",
             borderRadius: "20px",
             display: "flex",
             alignItems: "center",
-            gap: "25px",
+            gap: "10px",
             boxShadow: "0 6px 18px rgba(0,0,0,0.12)",
             marginBottom: "30px"
           }}
@@ -120,8 +120,8 @@ export default function PublicProfile() {
             src={user.avatar || "https://via.placeholder.com/150"}
             alt="avatar"
             style={{
-              width: "120px",
-              height: "120px",
+              width: "100px",
+              height: "100px",
               borderRadius: "50%",
               objectFit: "cover",
               border: "4px solid #764ba2"
@@ -144,14 +144,14 @@ export default function PublicProfile() {
 
             {/* Follow/Unfollow + Message */}
             {currentUser?._id !== user._id && (
-              <div style={{ marginTop: "12px", display: "flex", gap: "10px" }}>
+              <div style={{ marginTop: "12px", display: "flex", gap: "4px" }}>
                 <button
                   onClick={isFollowing ? handleUnfollow : handleFollow}
                   style={{
-                    padding: "10px 18px",
+                    padding: "5px 8px",
                     borderRadius: "10px",
                     border: "none",
-                    background: isFollowing ? "#ef4444" : "#2563EB",
+                    background: isFollowing ? "#dd0707ff" : "#2563EB",
                     color: "white",
                     fontWeight: "700",
                     cursor: "pointer"
@@ -165,7 +165,7 @@ export default function PublicProfile() {
                   style={{
                     padding: "10px 18px",
                     borderRadius: "10px",
-                    background: "#10B981",
+                    background: "#008357ff",
                     color: "white",
                     fontWeight: "700",
                     textDecoration: "none"
@@ -223,7 +223,7 @@ export default function PublicProfile() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
-            gap: "12px"
+            gap: "7px"
           }}
         >
           {posts.map((p) => (

@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+
+import { FaRegComment, FaShare } from "react-icons/fa";
+
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
+  const [userId] = useState(localStorage.getItem("userId"));
 
   async function loadPosts() {
     const token = localStorage.getItem("token");
-
 
     const res = await fetch("https://mern-backend-igep.onrender.com/api/posts", {
       headers: { Authorization: "Bearer " + token }
@@ -20,15 +26,41 @@ export default function Home() {
     loadPosts();
   }, []);
 
-  async function handleLike(postId) {
-    const token = localStorage.getItem("token");
+ async function handleLike(postId) {
+  const token = localStorage.getItem("token");
 
-    await fetch(`https://mern-backend-igep.onrender.com/api/posts/${postId}/like`, {
-      method: "PUT",
-      headers: { Authorization: "Bearer " + token }
-    });
+  // instant UI update
+  setPosts(prev =>
+    prev.map(p =>
+      p._id === postId
+        ? {
+            ...p,
+            likes: p.likes.includes(userId)
+              ? p.likes.filter(id => id !== userId)
+              : [...p.likes, userId]
+          }
+        : p
+    )
+  );
 
-    loadPosts();
+  // send to backend
+  await fetch(`https://mern-backend-igep.onrender.com/api/posts/${postId}/like`, {
+    method: "PUT",
+    headers: { Authorization: "Bearer " + token }
+  });
+}
+
+
+  function handleShare(post) {
+    if (navigator.share) {
+      navigator.share({
+        title: post.title,
+        text: post.description,
+        url: window.location.href
+      });
+    } else {
+      alert("Sharing is not supported on this device.");
+    }
   }
 
   return (
@@ -42,6 +74,7 @@ export default function Home() {
       }}
     >
       <div style={{ width: "100%", maxWidth: "650px" }}>
+
         <h2
           style={{
             textAlign: "center",
@@ -63,116 +96,140 @@ export default function Home() {
             key={p._id}
             style={{
               background: "#ffffff",
-              padding: "20px",
-              borderRadius: "20px",
+              borderRadius: "18px",
               marginBottom: "25px",
-              boxShadow: "0 6px 20px rgba(0,0,0,0.12)",
-              border: "1px solid #e5e7eb"
+              border: "1px solid #e5e7eb",
+              boxShadow: "0 6px 18px rgba(0,0,0,0.12)"
             }}
           >
-            {/* USER SECTION */}
-           <Link to={`/user/${p.userId._id}`}
-              style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", color: "inherit" }}
+            {/* USER HEADER */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "12px 15px"
+              }}
             >
-              <img
-                src={p.userId.avatar}
-                alt=""
-                style={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
-            <b>{p.userId.username}</b>
-            </Link>
+              <Link
+                to={`/user/${p.userId._id}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  textDecoration: "none",
+                  color: "#222"
+                }}
+              >
+                <img
+                  src={
+                    p.userId.avatar ||
+                    "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                  }
+                  alt=""
+                  style={{
+                    width: 42,
+                    height: 42,
+                    borderRadius: "50%",
+                    objectFit: "cover"
+                  }}
+                />
+                <b>{p.userId.username}</b>
+              </Link>
 
-              <br/>
+              {/* <FiMoreHorizontal size={26} style={{ cursor: "pointer" }} /> */}
+            </div>
+
             {/* IMAGE */}
             {p.image && (
               <img
                 src={p.image}
-                alt=""
+                alt="post"
                 style={{
                   width: "100%",
-                  borderRadius: "16px",
-                  marginBottom: "15px"
+                  objectFit: "cover",
+                  maxHeight: "450px"
                 }}
               />
             )}
-            {/* TITLE + DESCRIPTION */}
-            <h3
-              style={{
-                marginTop: "15px",
-                fontSize: "22px",
-                fontWeight: "700",
-                color: "#222"
-              }}
-            >
-              {p.title}
-            </h3>
-
-            <p style={{ color: "#555", marginBottom: "10px" }}>
-              {p.description}
-            </p>
-
 
             {/* ACTION BUTTONS */}
-<div style={{ 
-  display: "grid",
-  gridTemplateColumns: "repeat(3, 1fr)",
-  gap: "10px",
-  marginBottom: "10px"
-}}>
-  
-  {/* LIKE */}
-  <button
+{/* ACTION BUTTONS */}
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "20px",
+    padding: "12px 15px"
+  }}
+>
+  {/* ❤️ LIKE */}
+  <div
     onClick={() => handleLike(p._id)}
     style={{
-      background: "#ef4444",
-      color: "white",
-      border: "none",
-      padding: "10px 0",
-      borderRadius: "12px",
       cursor: "pointer",
-      fontWeight: "600",
-      fontSize: "15px"
+      display: "flex",
+      alignItems: "center",
+      gap: "6px"
     }}
   >
-    ❤️ Like  ({p.likes.length})
-  </button>
+    {p.likes.includes(userId) ? (
+      <AiFillHeart size={28} color="#e11d48" />
+    ) : (
+      <AiOutlineHeart size={28} />
+    )}
 
-  {/* COMMENT */}
-  <button
-    onClick={() => window.location.href = `/post/${p._id}`}
+    <span style={{ fontSize: "15px", color: "#444" }}>
+      {p.likes.length}
+    </span>
+  </div>
+
+  {/* 💬 COMMENT */}
+  <div
+    onClick={() => navigate(`/post/${p._id}`)}
     style={{
-      background: "#3b82f6",
-      color: "white",
-      border: "none",
-      padding: "10px 0",
-      borderRadius: "12px",
       cursor: "pointer",
-      fontWeight: "600",
-      fontSize: "15px"
+      display: "flex",
+      alignItems: "center",
+      gap: "6px"
     }}
   >
-    💬 Comment
-  </button>
+    <FaRegComment size={25} />
 
-  {/* READ MORE BUTTON */}
-  <button
-    onClick={() => window.location.href = `/post/${p._id}`}
+    <span style={{ fontSize: "15px", color: "#6b7280" }}>
+      {p.comments?.length || 0}
+    </span>
+  </div>
+
+  {/* ↗ SHARE */}
+  <span
+    onClick={() => handleShare(p)}
+    style={{ cursor: "pointer" }}
+  >
+    <FaShare size={22} />
+  </span>
+
+  {/* // ➡ SHOW MORE ICON
+  <span
+    onClick={() => navigate(`/post/${p._id}`)}
     style={{
-      background: "#6d28d9",
-      color: "white",
-      border: "none",
-      padding: "10px 0",
-      borderRadius: "12px",
       cursor: "pointer",
-      fontWeight: "600",
-      fontSize: "15px"
+      display: "flex",
+      alignItems: "center",
+      fontSize:"20px"
     }}
+    title="Show More"
   >
-    Show More →
-  </button>
-
+  
+  </span>  */}
 </div>
 
+
+
+            {/* DESCRIPTION */}
+            <div style={{ padding: "0 15px 15px" }}>
+              <b>{p.userId.username}</b> : {p.description}
+            </div>
           </div>
         ))}
       </div>

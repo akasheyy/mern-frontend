@@ -97,7 +97,7 @@ export default function Explore() {
 
 
   return (
-    <div style={{ padding: "20px",minHeight:"90vh",background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",}}>
+    <div style={{ padding: "20px",minHeight:"90vh",background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",marginBottom:"50px" }}>
       <h2 style={{ marginBottom: "15px",marginTop:"50px",color:"white" }}>Explore</h2>
 
       {/* SEARCH BAR */}

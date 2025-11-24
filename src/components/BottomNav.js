@@ -53,7 +53,7 @@ export default function BottomNav() {
         position: "fixed",
         bottom: 0,
         width: "100%",
-        height: "70px",
+        height: "50px",
         background: "#ffffff",
         display: "flex",
         justifyContent: "space-around",

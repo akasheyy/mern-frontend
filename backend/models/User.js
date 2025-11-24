@@ -6,7 +6,10 @@ const userSchema = new mongoose.Schema(
     email:    { type: String, required: true, unique: true },
     password: { type: String, required: true },
 
-    avatar: String,
+    avatar: {
+      type: String,
+      default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+    },
     avatarPublicId: String,
 
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],

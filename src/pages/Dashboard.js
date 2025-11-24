@@ -29,14 +29,14 @@ export default function Dashboard() {
 
   if (conversations.length === 0)
     return (
-      <h3 style={{ textAlign: "center", marginTop: "40px" }}>
+      <h3 style={{ textAlign: "center", marginTop: "80px" }}>
         No chats yet. Start messaging someone.
       </h3>
     );
 
   return (
-    <div style={{ padding: "20px", maxWidth: "650px", margin: "0 auto" }}>
-      <h2 style={{ marginBottom: "20px", marginTop:"45px", textAlign:"center"}}>Messages</h2>
+    <div style={{ padding: "20px", maxWidth: "650px", margin: "0 auto",background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",marginBottom:"50px"  }}>
+      <h2 style={{ color:"white",marginBottom: "20px", marginTop:"45px", textAlign:"center"}}>Messages</h2>
 
       {conversations.map((chat) => {
         const u = chat.user;
@@ -94,15 +94,8 @@ export default function Dashboard() {
               <small style={{ color: "#999" }}>Active: {lastActive}</small>
             </div>
 
-            {/* Green active dot */}
-            <div
-              style={{
-                width: 12,
-                height: 12,
-                borderRadius: "50%",
-                background: "#22c55e",
-              }}
-            ></div>
+            
+           
           </Link>
         );
       })}

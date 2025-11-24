@@ -17,32 +17,63 @@ const messageSchema = new mongoose.Schema(
     // 📝 TEXT MESSAGE
     text: {
       type: String,
+      default: null
     },
 
     // 🔊 AUDIO MESSAGE
     audioUrl: {
       type: String,
+      default: null
     },
     audioDuration: {
       type: Number,
+      default: null
     },
 
-    // 📁 FILE MESSAGE (image / video / pdf / doc etc.)
+    // 📁 FILE MESSAGE
     fileUrl: {
       type: String,
+      default: null
     },
     fileType: {
-      type: String, // "image" | "video" | "file"
+      type: String, // image, video, file
+      default: null
     },
     fileName: {
       type: String,
+      default: null
     },
 
-    // message category
+    // 🔗 SHARED POST (NEW FEATURE)
+    sharedPost: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+      default: null
+    },
+
+    // message type
     type: {
       type: String,
-      enum: ["text", "audio", "file"],
+      enum: ["text", "audio", "file", "shared_post"],
       default: "text"
+    },
+
+    // 🗑 Deleted for everyone
+    deletedForEveryone: {
+      type: Boolean,
+      default: false
+    },
+
+    // ✓ single tick, ✓✓ double tick, ✓✓ blue tick
+    status: {
+      type: String,
+      enum: ["sent", "delivered", "seen"],
+      default: "sent"
+    },
+
+    seenAt: {
+      type: Date,
+      default: null
     }
   },
   { timestamps: true }

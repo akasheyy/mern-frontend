@@ -147,39 +147,65 @@ router.put("/:id", auth, upload.single("image"), async (req, res) => {
 });
 
 // ===============================
-// LIKE / UNLIKE
+// LIKE / UNLIKE + NOTIFICATION
 // ===============================
 router.put("/:id/like", auth, async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate(
+      "userId",
+      "username"
+    );
 
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    if (post.likes.includes(req.userId)) {
-      post.likes = post.likes.filter(id => id.toString() !== req.userId);
+    const io = req.app.get("io");         // 🔔 socket.io instance
+    const me = req.userId;                // current user id
+    const postOwnerId = post.userId._id.toString();
+
+    // UNLIKE
+    if (post.likes.includes(me)) {
+      post.likes = post.likes.filter((id) => id.toString() !== me);
       await post.save();
       return res.json({ message: "Post unliked", likes: post.likes.length });
     }
 
-    post.likes.push(req.userId);
+    // LIKE
+    post.likes.push(me);
     await post.save();
+
+    // send notification only if you like someone else's post
+    if (postOwnerId !== me) {
+      io.to(postOwnerId).emit("notification", {
+        type: "like",
+        fromUserId: me,
+        toUserId: postOwnerId,
+        postId: post._id,
+        postTitle: post.title,
+        createdAt: new Date()
+      });
+    }
 
     res.json({ message: "Post liked", likes: post.likes.length });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server Error" });
   }
 });
 
 // ===============================
-// COMMENT
+// COMMENT + NOTIFICATION
 // ===============================
 router.post("/:id/comment", auth, async (req, res) => {
   try {
     const { text } = req.body;
 
-    if (!text.trim()) return res.status(400).json({ message: "Comment cannot be empty" });
+    if (!text.trim())
+      return res.status(400).json({ message: "Comment cannot be empty" });
 
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate(
+      "userId",
+      "username"
+    );
 
     if (!post) return res.status(404).json({ message: "Post not found" });
 
@@ -191,10 +217,62 @@ router.post("/:id/comment", auth, async (req, res) => {
 
     await post.save();
 
+    const io = req.app.get("io");
+    const me = req.userId;
+    const postOwnerId = post.userId._id.toString();
+
+    if (postOwnerId !== me) {
+      io.to(postOwnerId).emit("notification", {
+        type: "comment",
+        fromUserId: me,
+        toUserId: postOwnerId,
+        postId: post._id,
+        postTitle: post.title,
+        text,
+        createdAt: new Date()
+      });
+    }
+
     res.json({ message: "Comment added", post });
   } catch (err) {
     console.log("COMMENT ERROR:", err);
     res.status(500).json({ message: "Server Error" });
+  }
+});
+
+
+// ===============================
+// SHARE POST INTERNALLY (send to another user)
+// ===============================
+router.post("/:postId/share", auth, async (req, res) => {
+  try {
+    const { toUserId } = req.body;
+    const { postId } = req.params;
+
+    if (!toUserId)
+      return res.status(400).json({ message: "Receiver userId is required" });
+
+    const Message = require("../models/Message");
+
+    // Create a message that contains the shared post
+    const msg = await Message.create({
+      sender: req.userId,
+      receiver: toUserId,
+      sharedPost: postId,
+      text: "Shared a post with you",
+      status: "sent"
+    });
+
+    // Send live notification using socket.io
+    const io = req.app.get("io");
+    if (io) {
+      io.to(toUserId).emit("new_message", msg);
+    }
+
+    res.json({ message: "Post shared successfully", shared: true });
+  } catch (error) {
+    console.log("Share Error:", error);
+    res.status(500).json({ message: "Failed to share post" });
   }
 });
 
