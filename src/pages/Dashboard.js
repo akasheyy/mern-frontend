@@ -35,7 +35,7 @@ export default function Dashboard() {
     );
 
   return (
-    <div style={{ padding: "20px", maxWidth: "650px", margin: "0 auto",background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",marginBottom:"50px"  }}>
+    <div style={{ padding: "20px", maxWidth: "650px", margin: "0 auto",background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",marginBottom:"50px",minHeight:"100vh"  }}>
       <h2 style={{ color:"white",marginBottom: "20px", marginTop:"45px", textAlign:"center"}}>Messages</h2>
 
       {conversations.map((chat) => {
