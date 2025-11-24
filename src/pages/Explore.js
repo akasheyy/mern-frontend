@@ -120,7 +120,7 @@ export default function Explore() {
       {/* ------------------------------------ */}
       {/* 🔥 SUGGESTED USERS */}
       {/* ------------------------------------ */}
-      {suggestions.length > 0 && (
+     {search.trim() === "" && suggestions.length > 0 && (
         <>
           <h3 style={{ marginBottom: "10px",color:"white" }}>Suggested for you</h3>
 
