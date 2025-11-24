@@ -821,15 +821,7 @@ export default function Chat() {
             <p style={{ marginBottom: "10px", fontWeight: 600 }}>
               Delete this message?
             </p>
-            <p
-              style={{
-                fontSize: "13px",
-                color: "#6b7280",
-                marginBottom: "14px"
-              }}
-            >
-              "Delete for everyone" removes it from both sides (like WhatsApp).
-            </p>
+           
 
             <button
               onClick={() => handleDeleteMessage("me")}
@@ -928,16 +920,7 @@ export default function Chat() {
             <p style={{ marginBottom: "10px", fontWeight: 600 }}>
               Clear chat?
             </p>
-            <p
-              style={{
-                fontSize: "13px",
-                color: "#6b7280",
-                marginBottom: "14px"
-              }}
-            >
-              "Clear chat" removes all messages in this conversation, similar to
-              WhatsApp.
-            </p>
+           
 
             <button
               onClick={() => handleClearChat("me")}
