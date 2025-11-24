@@ -459,7 +459,8 @@ export default function Chat() {
         height: "90vh",
         display: "flex",
         flexDirection: "column",
-        background: "#f3f4f6"
+        background: "#f3f4f6",
+        marginBottom:"50px"
       }}
     >
       {/* ---------------- TOP BAR ---------------- */}
@@ -561,8 +562,8 @@ export default function Chat() {
                 display: "flex",
                 justifyContent: isMe ? "flex-end" : "flex-start",
                 alignItems: "flex-end",
-                marginBottom: "14px",
-                gap: "6px"
+                marginBottom: "30px",
+                gap: "3px"
               }}
             >
               {!isMe && (
@@ -713,7 +714,7 @@ export default function Chat() {
         <button
           onClick={() => document.getElementById("fileInput").click()}
           style={{
-            width: 42,
+            width: 35,
             height: 42,
             borderRadius: "50%",
             background: "#e5e7eb",
@@ -736,7 +737,7 @@ export default function Chat() {
             borderRadius: "20px",
             border: "1px solid #ccc",
             outline: "none",
-            fontSize: "15px"
+            fontSize: "15px",
           }}
         />
 
@@ -744,7 +745,7 @@ export default function Chat() {
         <button
           onClick={isRecording ? stopRecording : startRecording}
           style={{
-            width: 42,
+            width: 35,
             height: 42,
             borderRadius: "50%",
             border: "none",
@@ -761,7 +762,7 @@ export default function Chat() {
           onClick={sendMessage}
           disabled={!text.trim() || isRecording}
           style={{
-            padding: "12px 18px",
+            padding: "10px 16px",
             borderRadius: "20px",
             background:
               !text.trim() || isRecording ? "#9ca3af" : "#4f46e5",
@@ -772,7 +773,7 @@ export default function Chat() {
               !text.trim() || isRecording ? "not-allowed" : "pointer"
           }}
         >
-          Send
+          ➤
         </button>
       </div>
 
